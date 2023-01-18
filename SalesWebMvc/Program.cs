@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SalesWebMvc.Data;
 namespace SalesWebMvc
@@ -20,10 +21,19 @@ namespace SalesWebMvc
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<SeedingService>();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+
+            if (app.Environment.IsDevelopment())
+            {
+                using (var scope = app.Services.CreateScope())
+                {
+                    scope.ServiceProvider.GetRequiredService<SeedingService>().Seed();
+                }
+            }
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
