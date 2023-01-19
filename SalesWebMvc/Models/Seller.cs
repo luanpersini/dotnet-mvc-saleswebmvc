@@ -3,11 +3,12 @@
     public class Seller
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public string Name { get; set; } = default!;
+        public string Email { get; set; } = default!;
         public DateTime BirthDate { get; set; }
         public double BaseSalary { get; set; }
-        public Department Department { get; set; }
+        public Department Department { get; set; } = default!;
+        public int DepartmentId { get; set; }
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 
         public Seller()
