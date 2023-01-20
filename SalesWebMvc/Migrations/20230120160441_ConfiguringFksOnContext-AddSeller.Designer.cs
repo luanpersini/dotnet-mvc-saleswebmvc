@@ -11,8 +11,8 @@ using SalesWebMvc.Data;
 namespace SalesWebMvc.Migrations
 {
     [DbContext(typeof(SalesWebMvcContext))]
-    [Migration("20230118010124_Add-Seller-Sales-Record")]
-    partial class AddSellerSalesRecord
+    [Migration("20230120160441_ConfiguringFksOnContext-AddSeller")]
+    partial class ConfiguringFksOnContextAddSeller
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,7 +83,8 @@ namespace SalesWebMvc.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)");
 
                     b.HasKey("Id");
 
@@ -97,7 +98,7 @@ namespace SalesWebMvc.Migrations
                     b.HasOne("SalesWebMvc.Models.Seller", "Seller")
                         .WithMany("Sales")
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Seller");
@@ -108,7 +109,7 @@ namespace SalesWebMvc.Migrations
                     b.HasOne("SalesWebMvc.Models.Department", "Department")
                         .WithMany("Sellers")
                         .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Department");

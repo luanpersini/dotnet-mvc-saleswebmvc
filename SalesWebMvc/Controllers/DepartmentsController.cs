@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
+using SalesWebMvc.Services.Exceptions;
 
 namespace SalesWebMvc.Controllers
 {
@@ -147,9 +148,15 @@ namespace SalesWebMvc.Controllers
             if (department != null)
             {
                 _context.Department.Remove(department);
+            }            
+            try
+            {
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (DbUpdateException e)
+            {
+                throw new IntegrityException("Can't delete this department because it has sellers.");
+            }
             return RedirectToAction(nameof(Index));
         }
 

@@ -15,3 +15,4 @@ My project has the following changes:
 
 1. MVC tutorial: https://learn.microsoft.com/pt-br/aspnet/mvc/overview/older-versions/mvc-music-store/
 2. Async/await: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/
+3. Relationships/FKs: https://www.learnentityframeworkcore.com/configuration/one-to-many-relationship-configuration 
