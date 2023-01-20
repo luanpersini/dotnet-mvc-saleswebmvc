@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMvc.Services
 {
-    public class DepartmentService
+    public class DepartmentService: IDepartmentService
     {
         private readonly SalesWebMvcContext _context;
 
         public DepartmentService(SalesWebMvcContext context)
         {
             _context = context;
-        }
+        }      
 
         public async Task<List<Department>> FindAllAsync()
         {
