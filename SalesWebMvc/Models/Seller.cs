@@ -28,10 +28,9 @@ namespace SalesWebMvc.Models
         [Display(Name = "Base Salary")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
         public double BaseSalary { get; set; }
-
-        [ForeignKey("DepartmentId")]
+               
         [ValidateNever]
-        public Department? Department { get; set; }
+        public Department Department { get; set; }
 
         [Required]
         public int DepartmentId { get; set; } 

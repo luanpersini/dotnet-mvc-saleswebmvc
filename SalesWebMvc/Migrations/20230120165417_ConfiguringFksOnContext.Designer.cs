@@ -11,8 +11,8 @@ using SalesWebMvc.Data;
 namespace SalesWebMvc.Migrations
 {
     [DbContext(typeof(SalesWebMvcContext))]
-    [Migration("20230120160441_ConfiguringFksOnContext-AddSeller")]
-    partial class ConfiguringFksOnContextAddSeller
+    [Migration("20230120165417_ConfiguringFksOnContext")]
+    partial class ConfiguringFksOnContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
