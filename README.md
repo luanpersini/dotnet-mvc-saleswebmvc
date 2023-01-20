@@ -11,6 +11,7 @@ My project has the following changes:
 	- https://learn.microsoft.com/pt-br/aspnet/mvc/overview/older-versions-1/nerddinner/use-viewdata-and-implement-viewmodel-classes?source=recommendations
 
 
-## Tutorials
+## More of C#
 
-1. https://learn.microsoft.com/pt-br/aspnet/mvc/overview/older-versions/mvc-music-store/
+1. MVC tutorial: https://learn.microsoft.com/pt-br/aspnet/mvc/overview/older-versions/mvc-music-store/
+2. Async/await: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/
