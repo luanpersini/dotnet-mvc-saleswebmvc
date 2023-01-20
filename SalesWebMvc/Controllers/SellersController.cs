@@ -3,6 +3,9 @@ using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Models;
 using SalesWebMvc.Services;
 using System.Diagnostics;
+using NuGet.Protocol.Plugins;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMvc.Controllers
 {
@@ -25,17 +28,23 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Create()
         {
-            var departments = _departmentService.FindAll();
-            var viewModel = new SellerFormViewModel { Departments = departments };
-            return View(viewModel);
+            ViewData["DepartmentId"] = new SelectList(_departmentService.FindAll(), "Id", "Name");            
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
-            _sellerService.Insert(seller);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                _sellerService.Insert(seller);
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["DepartmentId"] = new SelectList(_departmentService.FindAll(), "Id", "Name", seller.DepartmentId);
+            return View();
+
         }
 
         public IActionResult Delete(int? id)
@@ -85,21 +94,26 @@ namespace SalesWebMvc.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _sellerService.FindById(id.Value);
-            if (obj == null)
+            var seller = _sellerService.FindById(id.Value);
+            if (seller == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
-            }
+            }            
 
-            List<Department> departments = _departmentService.FindAll();
-            SellerFormViewModel viewModel = new SellerFormViewModel { Seller = obj, Departments = departments };
-            return View(viewModel);
+            ViewData["DepartmentId"] = new SelectList(_departmentService.FindAll(), "Id", "Name", seller.DepartmentId);
+            return View(seller);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewData["DepartmentId"] = new SelectList(_departmentService.FindAll(), "Id", "Name", seller.DepartmentId);
+                return View(seller);
+            }
+
             if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
@@ -113,6 +127,7 @@ namespace SalesWebMvc.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
+            
         }
 
         public IActionResult Error(string message)
@@ -124,5 +139,6 @@ namespace SalesWebMvc.Controllers
             };
             return View(viewModel);
         }
+
     }
 }
