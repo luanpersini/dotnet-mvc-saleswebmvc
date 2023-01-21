@@ -24,7 +24,8 @@ namespace SalesWebMvc
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<SeedingService>();
-            builder.Services.AddScoped<SellerService>();
+            builder.Services.AddScoped<ISellerService, SellerService>();
+            builder.Services.AddScoped<ISellerRepository, SellerRepository>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<SalesRecordService>();
 
@@ -35,7 +36,7 @@ namespace SalesWebMvc
                 using (var scope = app.Services.CreateScope())
                 {
                     scope.ServiceProvider.GetRequiredService<SeedingService>().Seed();
-                }
+                }               
             }
 
             if (!app.Environment.IsDevelopment())
@@ -43,14 +44,14 @@ namespace SalesWebMvc
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+
+                app.UseHttpsRedirection(); //Disabled in development so i can make calls from external apps (Insomnia)
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             var enUS = new CultureInfo("en-US");
             var localizationOptions = new RequestLocalizationOptions
