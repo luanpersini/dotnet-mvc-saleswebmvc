@@ -4,7 +4,7 @@ Project based in the course https://www.udemy.com/course/programacao-orientada-a
 
 My project has the following changes:
 
-- Using .Net 6.0 instead of .Net 2.1
+- Using .Net 7.0 instead of .Net 2.1
 - Added Repositories
 - Using Interfaces for Services and Repositories
 - Using SelectListItem + ViewBag instead of ViewModel classes with the intent of populating view info.
